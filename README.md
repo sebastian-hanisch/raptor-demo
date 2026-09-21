@@ -1,5 +1,7 @@
 # RAPTOR – früher ankommen oder weniger umsteigen – Streamlit-Demo
 
+**[→ Demo live ausprobieren](https://sebastianhanisch-raptor-demo.streamlit.app/)**
+
 Zwölftes und letztes Stück der Kürzeste-Wege-Linie der "Konzepte"-Reihe für die Website "Sebastian Hanisch – Operations Research und Machine Learning", Kind von [Mehrkriterien-Routing](../multicriteria-demo) und [Dijkstra](../dijkstra-demo):
 anders als die Fall-Demos im Portfolio (ein Anwendungsfall, mehrere Verfahren im Vergleich) zeigt diese Demo **ein** Verfahren – **RAPTOR**, die Fahrplanauskunft in Runden – an einem wachsenden Beispiel.
 Eine Fahrplanauskunft ist kein Kürzeste-Wege-Problem mit festen Kosten: eine "Kante" ist eine **Fahrt mit fester Abfahrt**, und wer umsteigt, muss die nächste Abfahrt abwarten. Außerdem gibt es **zwei Ziele zugleich** – früh ankommen und wenig umsteigen –, die Antwort ist eine **Pareto-Menge**.
