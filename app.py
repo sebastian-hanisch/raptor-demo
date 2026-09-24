@@ -23,6 +23,7 @@ from rp_presets import (
     init_session_state_defaults,
     load_permalink_settings,
     randomize_seed,
+    seed_widget,
     sync_query_params,
 )
 from rp_timetable import make_timetable
@@ -123,8 +124,10 @@ with st.sidebar:
     depart = st.select_slider("Abfahrtszeit", C.DEPART_OPTIONS, key="depart_slider", format_func=C.hhmm,
                               help="Wann man am Start losgeht (Schritte von 5 Minuten, 6:00 bis 20:00). Im kleinen Netz hat die Front zu jeder vollen Stunde drei Punkte (65 / 51 / 40 Minuten), zur halben nur zwei - die Abfahrten der Linien liegen gegeneinander versetzt.")
     if net_key == "city":
+        seed_widget("side_slider")
         side = st.slider("Haltestellen je Seite", *bounds("side_slider"), key="side_slider", help="Größe des Rasters: n = Seite² Haltestellen; jede Zeile und Spalte ist eine Buslinie, jede dritte hat einen Express.")
         st.session_state[KEPT["side_slider"]] = side
+        seed_widget("headway_slider")
         headway = st.slider("Takt der Buslinien [min]", *bounds("headway_slider"), key="headway_slider", step=5,
                             help="Alle wie viele Minuten eine Buslinie fährt (der Express halb so oft). Mit Fußwegen (5 Minuten je Block) sinkt die Zahl der Punkte auf der Front im Mittel von 1.9 (Takt 5) über 1.6 (Takt 10) und 1.4 (Takt 15) auf 1.3 (Takt 20 und 30); die Fahrzeit der schnellsten Verbindung steigt von 14.5 auf 16.8 min.")
         st.session_state[KEPT["headway_slider"]] = headway
@@ -132,23 +135,28 @@ with st.sidebar:
         side = int(st.session_state.get(KEPT["side_slider"], C.DEFAULT_SIDE))
         headway = int(st.session_state.get(KEPT["headway_slider"], C.DEFAULT_HEADWAY))
     if net_key in ("city", "random"):
+        seed_widget("walk_slider")
         walk = st.slider("Fußweg [min je Block]", *bounds("walk_slider"), key="walk_slider",
                          help="0 = keine Fußwege. Sonst darf man nach jeder Fahrt (und am Start) zu Fuß gehen, so viele Minuten je Block (diagonal entsprechend länger), beliebig weit, aber nur einmal hintereinander. Im 6 × 6-Stadtnetz (Takt 10, Mittel über fünf Netze): 0 min -> 3 % der Paare haben mehr als einen Punkt auf der Front, 5 min -> 58 %, 10 min -> 95 %.")
         st.session_state[KEPT["walk_slider"]] = walk
     else:
         walk = int(st.session_state.get(KEPT["walk_slider"], C.DEFAULT_WALK))
     if net_key == "random":
+        seed_widget("nodes_slider")
         nodes = st.slider("Haltestellen", *bounds("nodes_slider"), key="nodes_slider", step=10, help="Anzahl der Haltestellen n.")
         st.session_state[KEPT["nodes_slider"]] = nodes
+        seed_widget("lines_slider")
         lines = st.slider("Linien", *bounds("lines_slider"), key="lines_slider", help="Zahl der Linien (jede mit Hin- und Rückrichtung); mit wenigen Linien sind viele Paare gar nicht verbunden.")
         st.session_state[KEPT["lines_slider"]] = lines
     else:
         nodes = int(st.session_state.get(KEPT["nodes_slider"], C.DEFAULT_NODES))
         lines = int(st.session_state.get(KEPT["lines_slider"], C.DEFAULT_LINES))
     if net_key in ("city", "random"):
+        seed_widget("distance_slider")
         distance = st.slider("Entfernung des Ziels [Perzentil]", *bounds("distance_slider"), key="distance_slider", step=5,
                              help="Das Ziel ist die Haltestelle, deren früheste Ankunft dem Perzentil aller erreichbaren Haltestellen entspricht: 0 = die nächste, 100 = die am spätesten erreichte.")
         st.session_state[KEPT["distance_slider"]] = distance
+        seed_widget("seed_input")
         seed = st.number_input("Zufalls-Seed", *bounds("seed_input"), key="seed_input", step=1)
         st.session_state[KEPT["seed_input"]] = seed
         st.button("🎲 Neues Netz generieren", width="stretch", on_click=randomize_seed, help="Würfelt einen neuen Zufalls-Seed für den Fahrplan.")
