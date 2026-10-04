@@ -78,3 +78,7 @@ streamlit run app.py
 ```
 
 Tests: `pip install -r requirements-dev.txt` und `python -m pytest tests/`. Jede Zahl in Hilfetexten, Presets und Tabellen ist in `tests/test_claims.py` belegt; die Kreuzprobe läuft gegen zwei unabhängige Verfahren (naive Runden, Connection Scan) und spielt jede Verbindung nach (Fahrpläne mit Fußwegen, mit und ohne Überschneidung der Takte, unerreichbare Ziele, Abfahrt nach der letzten Fahrt, Umsteigezeit 0); ein Regressionstest klickt "▶️ Abspielen" auf Netzen mit mehreren Bildern.
+
+---
+
+Diese Demo ist Teil des Portfolios von [Sebastian Hanisch](https://sebastianhanisch.net) – Operations Research und Machine Learning ([Über mich](https://sebastianhanisch.net/ueber-mich.html)). Mehr zur Reihe: [Kürzeste Wege: von der Breitensuche bis RAPTOR](https://sebastianhanisch.net/konzepte-kuerzeste-wege.html).

@@ -9,7 +9,7 @@ EXPRESS_EVERY = 3                  # jede dritte Zeile und Spalte hat einen Expr
 
 NETS = ("small", "city", "random")
 NET_LABELS = {
-    "small": "🔀 Kleines Netz (acht Haltestellen, vier Linien)",
+    "small": "🔀 Kleines Netz (acht Haltestellen, sechs Linien)",
     "city": "🏙️ Stadtnetz (Raster mit Bus und Express)",
     "random": "🕸️ Zufalls-Linien (erzeugt)",
 }
