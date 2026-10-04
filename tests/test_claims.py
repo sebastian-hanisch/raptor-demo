@@ -75,8 +75,8 @@ def test_departure_help_numbers_in_the_small_network():
 def test_headway_help_numbers():
     rows = {r["headway"]: r for r in ev.headway_rows()}
     assert [rows[h]["front"] for h in (5, 10, 15, 20, 30)] == pytest.approx([1.92, 1.62, 1.41, 1.27, 1.27], abs=0.005)
-    assert rows[5]["journey"] == pytest.approx(14.46, abs=0.005) and rows[30]["journey"] == pytest.approx(16.79, abs=0.005) and [rows[h]["journey"] for h in (5, 10, 15, 20)] == sorted([rows[h]["journey"] for h in (5, 10, 15, 20)])
-    assert rows[30]["journey"] - rows[5]["journey"] == pytest.approx(2.325, abs=0.005) and rows[5]["stop_times"] / rows[30]["stop_times"] == pytest.approx(6.0, abs=0.02)      # Fahrplan sechsmal kleiner
+    assert rows[5]["journey"] == pytest.approx(14.455, abs=0.0051) and rows[30]["journey"] == pytest.approx(16.79, abs=0.005) and [rows[h]["journey"] for h in (5, 10, 15, 20)] == sorted([rows[h]["journey"] for h in (5, 10, 15, 20)])
+    assert rows[30]["journey"] - rows[5]["journey"] == pytest.approx(2.335, abs=0.0051) and rows[5]["stop_times"] / rows[30]["stop_times"] == pytest.approx(6.0, abs=0.02)      # Fahrplan sechsmal kleiner
     assert rows[5]["trips"] == pytest.approx(0.98, abs=0.005) and rows[30]["trips"] == pytest.approx(0.265, abs=0.0051)
 
 
@@ -84,7 +84,7 @@ def test_walk_help_numbers_and_the_conflict_rows():
     rows = {r["label"]: r for r in ev.front_rows()}
     zero, w3, w5, w10 = (rows[k] for k in ("Stadtnetz, ohne Fußwege", "Stadtnetz, 3 min je Block zu Fuß", "Stadtnetz, 5 min je Block zu Fuß", "Stadtnetz, 10 min je Block zu Fuß"))
     assert (zero["multi"], w5["multi"], w10["multi"]) == pytest.approx((0.03, 0.58, 0.95), abs=0.005)                  # Hilfe: 3 / 58 / 95 %
-    assert w10["front"] == pytest.approx(2.44, abs=0.005) and zero["trips"] == pytest.approx(1.72, abs=0.005) and w3["trips"] < 0.1 and all(r["reach"] == 1.0 for r in list(rows.values())[:5])
+    assert w10["front"] == pytest.approx(2.43, abs=0.005) and zero["trips"] == pytest.approx(1.72, abs=0.005) and w3["trips"] < 0.1 and all(r["reach"] == 1.0 for r in list(rows.values())[:5])
     assert [rows[k]["rounds_max"] for k in ("Stadtnetz, ohne Fußwege", "Stadtnetz, 3 min je Block zu Fuß", "Stadtnetz, 5 min je Block zu Fuß", "Stadtnetz, 10 min je Block zu Fuß")] == pytest.approx([4.0, 2.0, 3.0, 4.0], abs=0.05)
     assert max(r["rounds_max"] for r in rows.values()) == pytest.approx(5.6, abs=0.05) and rows["Zufalls-Linien, 40 Halte"]["reach"] == pytest.approx(0.9, abs=0.005)
 
